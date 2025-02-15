@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Box, createStyles, Text } from '@mantine/core';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
@@ -9,8 +10,8 @@ const useStyles = createStyles((theme) => ({
   container: {
     width: 350,
     height: 45,
-    borderRadius: theme.radius.sm,
-    backgroundColor: theme.colors.dark[5],
+    borderRadius: 2,
+    backgroundColor: 'rgba(0, 0, 0, 0.50)',
     overflow: 'hidden',
   },
   wrapper: {
@@ -24,7 +25,7 @@ const useStyles = createStyles((theme) => ({
   },
   bar: {
     height: '100%',
-    backgroundColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
+    backgroundColor: 'rgba(228, 0, 0, 0.5)',
   },
   labelWrapper: {
     position: 'absolute',

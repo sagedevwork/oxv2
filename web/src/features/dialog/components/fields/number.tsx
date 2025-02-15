@@ -1,8 +1,8 @@
 import { NumberInput } from '@mantine/core';
-import { INumber } from '../../../../typings/dialog';
 import { Control, useController } from 'react-hook-form';
-import { FormValues } from '../../InputDialog';
 import LibIcon from '../../../../components/LibIcon';
+import { INumber } from '../../../../typings/dialog';
+import { FormValues } from '../../InputDialog';
 
 interface Props {
   row: INumber;
@@ -35,6 +35,20 @@ const NumberField: React.FC<Props> = (props) => {
       disabled={props.row.disabled}
       icon={props.row.icon && <LibIcon icon={props.row.icon} fixedWidth />}
       withAsterisk={props.row.required}
+      styles={{
+        input: {
+          color: 'rgba(255, 255, 255, 0.75)',
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          borderRadius: 8,
+          borderColor: 'rgba(255, 255, 255, 0.15)',
+          ':focus-within': {
+            borderColor: 'rgb(194, 5, 5)',
+          },
+        },
+        icon: {
+          color: 'rgba(255, 255, 255, 0.75)',
+        },
+      }}
     />
   );
 };

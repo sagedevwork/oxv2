@@ -1,8 +1,8 @@
 import { Textarea } from '@mantine/core';
-import { UseFormRegisterReturn } from 'react-hook-form';
-import { ITextarea } from '../../../../typings/dialog';
 import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import LibIcon from '../../../../components/LibIcon';
+import { ITextarea } from '../../../../typings/dialog';
 
 interface Props {
   register: UseFormRegisterReturn;
@@ -24,6 +24,20 @@ const TextareaField: React.FC<Props> = (props) => {
       autosize={props.row.autosize}
       minRows={props.row.min}
       maxRows={props.row.max}
+      styles={{
+        input: {
+          color: 'rgba(255, 255, 255, 0.75)',
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          borderRadius: 8,
+          borderColor: 'rgba(255, 255, 255, 0.15)',
+          ':focus-within': {
+            borderColor: 'rgb(194, 5, 5)',
+          },
+        },
+        icon: {
+          color: 'rgba(255, 255, 255, 0.75)',
+        },
+      }}
     />
   );
 };

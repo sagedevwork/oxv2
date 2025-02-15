@@ -1,65 +1,68 @@
-import { useNuiEvent } from '../../hooks/useNuiEvent';
-import { toast, Toaster } from 'react-hot-toast';
-import ReactMarkdown from 'react-markdown';
 import { Box, Center, createStyles, Group, keyframes, RingProgress, Stack, Text, ThemeIcon } from '@mantine/core';
 import React, { useState } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
+import ReactMarkdown from 'react-markdown';
 import tinycolor from 'tinycolor2';
-import type { NotificationProps } from '../../typings';
-import MarkdownComponents from '../../config/MarkdownComponents';
 import LibIcon from '../../components/LibIcon';
+import MarkdownComponents from '../../config/MarkdownComponents';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import type { NotificationProps } from '../../typings';
 
 const useStyles = createStyles((theme) => ({
   container: {
     width: 300,
     height: 'fit-content',
-    backgroundColor: theme.colors.dark[6],
-    color: theme.colors.dark[0],
-    padding: 12,
-    borderRadius: theme.radius.sm,
-    fontFamily: 'Roboto',
-    boxShadow: theme.shadows.sm,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    color: 'white',
+    padding: 8,
+    borderRadius: 16,
+    fontFamily: 'Albert Sans',
   },
   title: {
-    fontWeight: 500,
+    fontWeight: 600,
     lineHeight: 'normal',
+    fontSize: 16,
   },
   description: {
-    fontSize: 12,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontFamily: 'Albert Sans',
     lineHeight: 'normal',
+    fontWeight: 500,
   },
   descriptionOnly: {
     fontSize: 14,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontFamily: 'Albert Sans',
     lineHeight: 'normal',
+    fontWeight: 500,
   },
 }));
 
-const createAnimation = (from: string, to: string, visible: boolean) => keyframes({
-  from: {
-    opacity: visible ? 0 : 1,
-    transform: `translate${from}`,
-  },
-  to: {
-    opacity: visible ? 1 : 0,
-    transform: `translate${to}`,
-  },
-});
+const createAnimation = (from: string, to: string, visible: boolean) =>
+  keyframes({
+    from: {
+      opacity: visible ? 0 : 1,
+      transform: `translate${from}`,
+    },
+    to: {
+      opacity: visible ? 1 : 0,
+      transform: `translate${to}`,
+    },
+  });
 
 const getAnimation = (visible: boolean, position: string) => {
-  const animationOptions = visible ? '0.2s ease-out forwards' : '0.4s ease-in forwards'
+  const animationOptions = visible ? '0.2s ease-out forwards' : '0.4s ease-in forwards';
   let animation: { from: string; to: string };
 
   if (visible) {
-    animation = position.includes('bottom') ? { from: 'Y(30px)', to: 'Y(0px)' } : { from: 'Y(-30px)', to:'Y(0px)' };
+    animation = position.includes('bottom') ? { from: 'Y(30px)', to: 'Y(0px)' } : { from: 'Y(-30px)', to: 'Y(0px)' };
   } else {
     if (position.includes('right')) {
-      animation = { from: 'X(0px)', to: 'X(100%)' }
+      animation = { from: 'X(0px)', to: 'X(100%)' };
     } else if (position.includes('left')) {
       animation = { from: 'X(0px)', to: 'X(-100%)' };
-    } else if (position === 'top-center') {
+    } else if (position === 'left-center') {
       animation = { from: 'Y(0px)', to: 'Y(-100%)' };
     } else if (position === 'bottom') {
       animation = { from: 'Y(0px)', to: 'Y(100%)' };
@@ -68,7 +71,7 @@ const getAnimation = (visible: boolean, position: string) => {
     }
   }
 
-  return `${createAnimation(animation.from, animation.to, visible)} ${animationOptions}`
+  return `${createAnimation(animation.from, animation.to, visible)} ${animationOptions}`;
 };
 
 const durationCircle = keyframes({
@@ -87,19 +90,19 @@ const Notifications: React.FC = () => {
     const duration = data.duration || 3000;
 
     let iconColor: string;
-    let position = data.position || 'top-right';
+    let position = 'left-center';
 
     data.showDuration = data.showDuration !== undefined ? data.showDuration : true;
 
-    if (toastId) setToastKey(prevKey => prevKey + 1);
+    if (toastId) setToastKey((prevKey) => prevKey + 1);
 
     // Backwards compat with old notifications
     switch (position) {
-      case 'top':
-        position = 'top-center';
+      case 'left':
+        position = 'left-center';
         break;
       case 'bottom':
-        position = 'bottom-center';
+        position = 'left-center';
         break;
     }
 
@@ -138,7 +141,7 @@ const Notifications: React.FC = () => {
     } else {
       iconColor = tinycolor(data.iconColor).toRgbString();
     }
-    
+
     toast.custom(
       (t) => (
         <Box
@@ -210,7 +213,7 @@ const Notifications: React.FC = () => {
       {
         id: toastId,
         duration: duration,
-        position: position,
+        position: 'left-center',
       }
     );
   });

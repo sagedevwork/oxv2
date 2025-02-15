@@ -1,59 +1,70 @@
 import { Box, createStyles, Stack, Tooltip } from '@mantine/core';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNuiEvent } from '../../../hooks/useNuiEvent';
-import ListItem from './ListItem';
-import Header from './Header';
 import FocusTrap from 'focus-trap-react';
-import { fetchNui } from '../../../utils/fetchNui';
-import type { MenuPosition, MenuSettings } from '../../../typings';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import LibIcon from '../../../components/LibIcon';
+import { useNuiEvent } from '../../../hooks/useNuiEvent';
+import type { MenuPosition, MenuSettings } from '../../../typings';
+import { fetchNui } from '../../../utils/fetchNui';
+import Header from './Header';
+import ListItem from './ListItem';
 
 const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCount: number; selected: number }) => ({
   tooltip: {
-    backgroundColor: theme.colors.dark[6],
-    color: theme.colors.dark[2],
-    borderRadius: theme.radius.sm,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    color: '#FFFFFF',
+    borderRadius: 8,
     maxWidth: 350,
     whiteSpace: 'normal',
+    padding: '8px 16px',
+    fontSize: 14,
+    fontWeight: 500,
   },
   container: {
     position: 'absolute',
     pointerEvents: 'none',
-    marginTop: params.position === 'top-left' || params.position === 'top-right' ? 5 : 0,
-    marginLeft: params.position === 'top-left' || params.position === 'bottom-left' ? 5 : 0,
-    marginRight: params.position === 'top-right' || params.position === 'bottom-right' ? 5 : 0,
-    marginBottom: params.position === 'bottom-left' || params.position === 'bottom-right' ? 5 : 0,
-    right: params.position === 'top-right' || params.position === 'bottom-right' ? 1 : undefined,
-    left: params.position === 'bottom-left' ? 1 : undefined,
-    bottom: params.position === 'bottom-left' || params.position === 'bottom-right' ? 1 : undefined,
-    fontFamily: 'Roboto',
+    top: '50%',
+    right: 64,
+    transform: 'translateY(-50%)',
+    fontFamily: 'Albert Sans',
     width: 384,
+    height: 'fit-content',
   },
   buttonsWrapper: {
     height: 'fit-content',
     maxHeight: 415,
     overflow: 'hidden',
-    borderRadius: params.itemCount <= 6 || params.selected === params.itemCount - 1 ? theme.radius.md : undefined,
-    backgroundColor: theme.colors.dark[8],
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    padding: 0,
   },
   scrollArrow: {
-    backgroundColor: theme.colors.dark[8],
     textAlign: 'center',
-    borderBottomLeftRadius: theme.radius.md,
-    borderBottomRightRadius: theme.radius.md,
     height: 25,
+    position: 'fixed',
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
   scrollArrowIcon: {
-    color: theme.colors.dark[2],
+    color: 'rgba(228, 0, 0, 0.5)',
     fontSize: 20,
+  },
+  customGradient: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: '50%',
+    height: '100%',
+    background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%)',
+  },
+  divider: {
+    width: '100%',
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
 }));
 
 const ListMenu: React.FC = () => {
   const [menu, setMenu] = useState<MenuSettings>({
-    position: 'top-left',
     title: '',
     items: [],
   });
@@ -199,50 +210,60 @@ const ListMenu: React.FC = () => {
   return (
     <>
       {visible && (
-        <Tooltip
-          label={
-            isValuesObject(menu.items[selected].values)
-              ? // @ts-ignore
-                menu.items[selected].values[indexStates[selected]].description
-              : menu.items[selected].description
-          }
-          opened={
-            isValuesObject(menu.items[selected].values)
-              ? // @ts-ignore
-                !!menu.items[selected].values[indexStates[selected]].description
-              : !!menu.items[selected].description
-          }
-          transitionDuration={0}
-          classNames={{ tooltip: classes.tooltip }}
-        >
-          <Box className={classes.container}>
-            <Header title={menu.title} />
-            <Box className={classes.buttonsWrapper} onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => moveMenu(e)}>
-              <FocusTrap active={visible}>
-                <Stack spacing={8} p={8} sx={{ overflowY: 'scroll' }}>
-                  {menu.items.map((item, index) => (
-                    <React.Fragment key={`menu-item-${index}`}>
-                      {item.label && (
-                        <ListItem
-                          index={index}
-                          item={item}
-                          scrollIndex={indexStates[index]}
-                          checked={checkedStates[index]}
-                          ref={listRefs}
-                        />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </Stack>
-              </FocusTrap>
-            </Box>
-            {menu.items.length > 6 && selected !== menu.items.length - 1 && (
-              <Box className={classes.scrollArrow}>
-                <LibIcon icon="chevron-down" className={classes.scrollArrowIcon} />
+        <>
+          <div className={classes.customGradient}></div>
+
+          <Tooltip
+            label={
+              isValuesObject(menu.items[selected].values)
+                ? // @ts-ignore
+                  menu.items[selected].values[indexStates[selected]].description
+                : menu.items[selected].description
+            }
+            opened={
+              isValuesObject(menu.items[selected].values)
+                ? // @ts-ignore
+                  !!menu.items[selected].values[indexStates[selected]].description
+                : !!menu.items[selected].description
+            }
+            transitionDuration={0}
+            classNames={{ tooltip: classes.tooltip }}
+          >
+            <Box className={classes.container}>
+              <Header title={menu.title} />
+              <Box
+                className={classes.buttonsWrapper}
+                onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => moveMenu(e)}
+              >
+                <FocusTrap active={visible}>
+                  <Stack spacing={0} p={0} sx={{ overflowY: 'scroll' }}>
+                    {menu.items.map((item, index) => (
+                      <React.Fragment key={`menu-item-${index}`}>
+                        {item.label && (
+                          <>
+                            <ListItem
+                              index={index}
+                              item={item}
+                              scrollIndex={indexStates[index]}
+                              checked={checkedStates[index]}
+                              ref={listRefs}
+                            />
+                            <div className={classes.divider}></div>
+                          </>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </Stack>
+                </FocusTrap>
               </Box>
-            )}
-          </Box>
-        </Tooltip>
+              {menu.items.length > 6 && selected !== menu.items.length - 1 && (
+                <Box className={classes.scrollArrow}>
+                  <LibIcon icon="chevron-down" className={classes.scrollArrowIcon} />
+                </Box>
+              )}
+            </Box>
+          </Tooltip>
+        </>
       )}
     </>
   );

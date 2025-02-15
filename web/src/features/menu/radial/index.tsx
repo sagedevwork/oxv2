@@ -1,15 +1,15 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Box, createStyles } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import LibIcon from '../../../components/LibIcon';
 import { useNuiEvent } from '../../../hooks/useNuiEvent';
-import { fetchNui } from '../../../utils/fetchNui';
-import { isIconUrl } from '../../../utils/isIconUrl';
+import { useLocales } from '../../../providers/LocaleProvider';
 import ScaleFade from '../../../transitions/ScaleFade';
 import type { RadialMenuItem } from '../../../typings';
-import { useLocales } from '../../../providers/LocaleProvider';
-import LibIcon from '../../../components/LibIcon';
+import { fetchNui } from '../../../utils/fetchNui';
+import { isIconUrl } from '../../../utils/isIconUrl';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   wrapper: {
     position: 'absolute',
     top: '50%',
@@ -17,32 +17,31 @@ const useStyles = createStyles((theme) => ({
     transform: 'translate(-50%, -50%)',
   },
   sector: {
-    fill: theme.colors.dark[6],
-    color: theme.colors.dark[0],
+    fill: 'transparent',
+    strokeWidth: 1,
+    stroke: 'rgba(255, 255, 255, 0.1)',
 
     '&:hover': {
-      fill: theme.fn.primaryColor(),
+      fill: 'rgba(255, 113, 0, 0.75)',
       cursor: 'pointer',
       '> g > text, > g > svg > path': {
         fill: '#fff',
       },
     },
     '> g > text': {
-      fill: theme.colors.dark[0],
+      fill: 'rgba(255, 255, 255, 0.75)',
       strokeWidth: 0,
     },
   },
   backgroundCircle: {
-    fill: theme.colors.dark[6],
+    fill: 'rgba(0, 0, 0, 0.75)',
   },
   centerCircle: {
-    fill: theme.fn.primaryColor(),
+    fill: 'rgba(255, 113, 0, 1)',
     color: '#fff',
-    stroke: theme.colors.dark[6],
-    strokeWidth: 4,
     '&:hover': {
       cursor: 'pointer',
-      fill: theme.colors[theme.primaryColor][theme.fn.primaryShade() - 1],
+      fill: 'rgba(255, 113, 0, 0.75)',
     },
   },
   centerIconContainer: {

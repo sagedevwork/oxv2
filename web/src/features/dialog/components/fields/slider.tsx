@@ -1,6 +1,6 @@
 import { Box, Slider, Text } from '@mantine/core';
-import { ISlider } from '../../../../typings/dialog';
 import { Control, useController } from 'react-hook-form';
+import { ISlider } from '../../../../typings/dialog';
 import { FormValues } from '../../InputDialog';
 
 interface Props {
@@ -35,6 +35,24 @@ const SliderField: React.FC<Props> = (props) => {
           { value: props.row.min || 0, label: props.row.min || 0 },
           { value: props.row.max || 100, label: props.row.max || 100 },
         ]}
+        styles={{
+          thumb: {
+            backgroundColor: 'rgb(194, 5, 5)',
+          },
+          bar: {
+            backgroundColor: 'rgb(194, 5, 5)',
+          },
+          mark: {
+            border: 'none',
+            backgroundColor: 'transparent',
+          },
+          track: {
+            ':before': {
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+            },
+          },
+        }}
       />
     </Box>
   );

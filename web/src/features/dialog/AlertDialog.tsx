@@ -1,23 +1,22 @@
-import { Button, createStyles, Group, Modal, Stack, useMantineTheme } from '@mantine/core';
+import { Button, createStyles, Group, Modal, Stack } from '@mantine/core';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useNuiEvent } from '../../hooks/useNuiEvent';
-import { fetchNui } from '../../utils/fetchNui';
-import { useLocales } from '../../providers/LocaleProvider';
 import remarkGfm from 'remark-gfm';
-import type { AlertProps } from '../../typings';
 import MarkdownComponents from '../../config/MarkdownComponents';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import { useLocales } from '../../providers/LocaleProvider';
+import type { AlertProps } from '../../typings';
+import { fetchNui } from '../../utils/fetchNui';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   contentStack: {
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.75)',
   },
 }));
 
 const AlertDialog: React.FC = () => {
   const { locale } = useLocales();
   const { classes } = useStyles();
-  const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const [dialogData, setDialogData] = useState<AlertProps>({
     header: '',
@@ -41,6 +40,20 @@ const AlertDialog: React.FC = () => {
   return (
     <>
       <Modal
+        styles={{
+          root: {
+            fontFamily: 'Albert Sans',
+          },
+          modal: {
+            backgroundColor: 'rgba(0, 0, 0, 0.80)',
+            color: 'white',
+            borderRadius: 16,
+          },
+          header: {
+            fontSize: 20,
+            fontWeight: 500,
+          },
+        }}
         opened={opened}
         centered={dialogData.centered}
         size={dialogData.size || 'md'}
@@ -68,14 +81,39 @@ const AlertDialog: React.FC = () => {
           </ReactMarkdown>
           <Group position="right" spacing={10}>
             {dialogData.cancel && (
-              <Button uppercase variant="default" onClick={() => closeAlert('cancel')} mr={3}>
+              <Button
+                variant="default"
+                onClick={() => closeAlert('cancel')}
+                mr={3}
+                styles={{
+                  root: {
+                    transition: 'all 200ms ease-in-out',
+                    backgroundColor: 'transparent',
+                    ':hover': { backgroundColor: 'transparent' },
+                    fontWeight: 400,
+                    fontSize: 14,
+                  },
+                  label: {
+                    transition: 'all 200ms ease-in-out',
+                    color: 'rgba(255, 255, 255, 0.75)',
+                    ':hover': { color: 'rgba(255, 255, 255, 1)' },
+                  },
+                }}
+              >
                 {dialogData.labels?.cancel || locale.ui.cancel}
               </Button>
             )}
             <Button
-              uppercase
+              styles={{
+                root: {
+                  transition: 'all 200ms ease-in-out',
+                  backgroundColor: 'rgb(194, 5, 5)',
+                  ':hover': { backgroundColor: 'rgb(194, 5, 5)' },
+                  borderRadius: 8,
+                },
+                label: { color: 'white' },
+              }}
               variant={dialogData.cancel ? 'light' : 'default'}
-              color={dialogData.cancel ? theme.primaryColor : undefined}
               onClick={() => closeAlert('confirm')}
             >
               {dialogData.labels?.confirm || locale.ui.confirm}

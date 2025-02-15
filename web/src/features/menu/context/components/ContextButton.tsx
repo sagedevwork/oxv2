@@ -1,11 +1,11 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Button, createStyles, Group, HoverCard, Image, Progress, Stack, Text } from '@mantine/core';
 import ReactMarkdown from 'react-markdown';
+import LibIcon from '../../../../components/LibIcon';
+import MarkdownComponents from '../../../../config/MarkdownComponents';
 import { ContextMenuProps, Option } from '../../../../typings';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { isIconUrl } from '../../../../utils/isIconUrl';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import MarkdownComponents from '../../../../config/MarkdownComponents';
-import LibIcon from '../../../../components/LibIcon';
 
 const openMenu = (id: string | undefined) => {
   fetchNui<ContextMenuProps>('openContext', { id: id, back: false });
@@ -21,42 +21,48 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
   },
   label: {
     width: '100%',
-    color: params.disabled ? theme.colors.dark[3] : theme.colors.dark[0],
     whiteSpace: 'pre-wrap',
   },
   button: {
+    backgroundColor: 'transparent',
+    borderRadius: 0,
     height: 'fit-content',
     width: '100%',
-    padding: 10,
+    padding: 16,
     '&:hover': {
-      backgroundColor: params.readOnly ? theme.colors.dark[6] : undefined,
       cursor: params.readOnly ? 'unset' : 'pointer',
+      backgroundColor: 'black',
+      color: 'rgba(228, 0, 0, 0.5)',
+    },
+    '&:disabled': {
+      backgroundColor: 'transparent',
+      color: 'rgba(255, 255, 255, 0.5)',
     },
     '&:active': {
       transform: params.readOnly ? 'unset' : undefined,
     },
+    transition: 'all 0.3s ease-in-out',
   },
   iconImage: {
     maxWidth: '25px',
   },
-  description: {
-    color: params.disabled ? theme.colors.dark[3] : theme.colors.dark[2],
-    fontSize: 12,
-  },
   dropdown: {
-    padding: 10,
-    color: theme.colors.dark[0],
+    padding: 16,
+    color: '#FFFFFF',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
     fontSize: 14,
+    fontWeight: 500,
     maxWidth: 256,
     width: 'fit-content',
     border: 'none',
+    borderRadius: 16,
   },
   buttonStack: {
     gap: 4,
     flex: '1',
   },
   buttonGroup: {
-    gap: 4,
+    gap: 8,
     flexWrap: 'nowrap',
   },
   buttonIconContainer: {
@@ -67,12 +73,26 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
   },
   buttonTitleText: {
     overflowWrap: 'break-word',
+    fontSize: 16,
+    fontWeight: 600,
+  },
+  description: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontWeight: 500,
+    ':disabled': {
+      color: 'rgba(255, 255, 255, 0.5)',
+    },
   },
   buttonArrowContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 25,
     height: 25,
+    color: 'rgba(228, 0, 0, 0.5)',
+  },
+  progress: {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
 }));
 
@@ -133,7 +153,12 @@ const ContextButton: React.FC<{
                   </Text>
                 )}
                 {button.progress !== undefined && (
-                  <Progress value={button.progress} size="sm" color={button.colorScheme || 'dark.3'} />
+                  <Progress
+                    value={button.progress}
+                    size="md"
+                    color={'rgba(228, 0, 0, 0.5)'}
+                    bg={'rgba(255, 255, 255, 0.20)'}
+                  />
                 )}
               </Stack>
               {(button.menu || button.arrow) && button.arrow !== false && (
@@ -160,8 +185,9 @@ const ContextButton: React.FC<{
                   {typeof metadata === 'object' && metadata.progress !== undefined && (
                     <Progress
                       value={metadata.progress}
-                      size="sm"
-                      color={metadata.colorScheme || button.colorScheme || 'dark.3'}
+                      size="md"
+                      color={'rgba(228, 0, 0, 0.5)'}
+                      bg={'rgba(255, 255, 255, 0.20)'}
                     />
                   )}
                 </>

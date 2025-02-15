@@ -1,8 +1,8 @@
 import { MultiSelect, Select } from '@mantine/core';
-import { ISelect } from '../../../../typings';
 import { Control, useController } from 'react-hook-form';
-import { FormValues } from '../../InputDialog';
 import LibIcon from '../../../../components/LibIcon';
+import { ISelect } from '../../../../typings';
+import { FormValues } from '../../InputDialog';
 
 interface Props {
   row: ISelect;
@@ -34,6 +34,20 @@ const SelectField: React.FC<Props> = (props) => {
           clearable={props.row.clearable}
           searchable={props.row.searchable}
           icon={props.row.icon && <LibIcon icon={props.row.icon} fixedWidth />}
+          styles={{
+            input: {
+              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: 8,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              ':focus-within': {
+                borderColor: 'rgb(194, 5, 5)',
+              },
+            },
+            icon: {
+              color: 'rgba(255, 255, 255, 0.75)',
+            },
+          }}
         />
       ) : (
         <>
@@ -53,6 +67,20 @@ const SelectField: React.FC<Props> = (props) => {
               searchable={props.row.searchable}
               maxSelectedValues={props.row.maxSelectedValues}
               icon={props.row.icon && <LibIcon icon={props.row.icon} fixedWidth />}
+              styles={{
+                root: {
+                  color: 'rgba(255, 255, 255, 0.75)',
+                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                  borderRadius: 8,
+                  borderColor: 'rgba(255, 255, 255, 0.15)',
+                  ':focus-within': {
+                    borderColor: 'rgb(194, 5, 5)',
+                  },
+                },
+                icon: {
+                  color: 'rgba(255, 255, 255, 0.75)',
+                },
+              }}
             />
           )}
         </>

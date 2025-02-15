@@ -1,8 +1,8 @@
 import { createStyles, PasswordInput, TextInput } from '@mantine/core';
 import React from 'react';
-import { IInput } from '../../../../typings/dialog';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import LibIcon from '../../../../components/LibIcon';
+import { IInput } from '../../../../typings/dialog';
 
 interface Props {
   register: UseFormRegisterReturn;
@@ -12,7 +12,11 @@ interface Props {
 
 const useStyles = createStyles((theme) => ({
   eyeIcon: {
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.75)',
+  },
+  InputField: {
+    color: 'rgba(255, 255, 255, 0.75)',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
   },
 }));
 
@@ -33,6 +37,17 @@ const InputField: React.FC<Props> = (props) => {
           maxLength={props.row.max}
           disabled={props.row.disabled}
           withAsterisk={props.row.required}
+          styles={{
+            input: {
+              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: 8,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              ':focus': {
+                borderColor: 'rgb(194, 5, 5)',
+              },
+            },
+          }}
         />
       ) : (
         <PasswordInput
@@ -46,6 +61,20 @@ const InputField: React.FC<Props> = (props) => {
           maxLength={props.row.max}
           disabled={props.row.disabled}
           withAsterisk={props.row.required}
+          styles={{
+            input: {
+              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: 8,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              ':focus-within': {
+                borderColor: 'rgb(194, 5, 5)',
+              },
+            },
+            icon: {
+              color: 'rgba(255, 255, 255, 0.75)',
+            },
+          }}
           visibilityToggleIcon={({ reveal, size }) => (
             <LibIcon
               icon={reveal ? 'eye-slash' : 'eye'}

@@ -1,9 +1,9 @@
+import { Box, createStyles } from '@mantine/core';
 import { useRef, useState } from 'react';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
-import Indicator from './indicator';
-import { fetchNui } from '../../utils/fetchNui';
-import { Box, createStyles } from '@mantine/core';
 import type { GameDifficulty, SkillCheckProps } from '../../typings';
+import { fetchNui } from '../../utils/fetchNui';
+import Indicator from './indicator';
 
 export const circleCircumference = 2 * 50 * Math.PI;
 
@@ -27,7 +27,7 @@ const useStyles = createStyles((theme, params: { difficultyOffset: number }) => 
   },
   track: {
     fill: 'transparent',
-    stroke: theme.colors.dark[5],
+    stroke: 'rgba(0, 0, 0, 0.5)',
     strokeWidth: 8,
     r: 50,
     cx: 250,
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme, params: { difficultyOffset: number }) => 
   },
   skillArea: {
     fill: 'transparent',
-    stroke: theme.fn.primaryColor(),
+    stroke: 'rgb(212, 2, 2)',
     strokeWidth: 8,
     r: 50,
     cx: 250,
@@ -76,7 +76,7 @@ const useStyles = createStyles((theme, params: { difficultyOffset: number }) => 
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: theme.colors.dark[5],
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
     width: 25,
     height: 25,
     textAlign: 'center',

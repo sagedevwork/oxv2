@@ -1,10 +1,10 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Box, createStyles, Group, Progress, Stack, Text } from '@mantine/core';
 import React, { forwardRef } from 'react';
-import CustomCheckbox from './CustomCheckbox';
+import LibIcon from '../../../components/LibIcon';
 import type { MenuItem } from '../../../typings';
 import { isIconUrl } from '../../../utils/isIconUrl';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import LibIcon from '../../../components/LibIcon';
+import CustomCheckbox from './CustomCheckbox';
 
 interface Props {
   item: MenuItem;
@@ -15,18 +15,20 @@ interface Props {
 
 const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   buttonContainer: {
-    backgroundColor: theme.colors.dark[6],
-    borderRadius: theme.radius.md,
-    padding: 2,
+    backgroundColor: 'transparent',
+    padding: 16,
     height: 60,
     scrollMargin: 8,
+    color: 'white',
+    fontWeight: 600,
     '&:focus': {
-      backgroundColor: theme.colors.dark[4],
+      backgroundColor: 'black',
       outline: 'none',
     },
   },
   iconImage: {
     maxWidth: 32,
+    color: 'rgba(255, 255, 255, 0.75)',
   },
   buttonWrapper: {
     paddingLeft: 5,
@@ -41,20 +43,20 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   },
   icon: {
     fontSize: 24,
-    color: params.iconColor || theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.75)',
   },
   label: {
-    color: theme.colors.dark[2],
-    textTransform: 'uppercase',
-    fontSize: 12,
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontSize: 14,
     verticalAlign: 'middle',
+    fontWeight: 500,
   },
   chevronIcon: {
     fontSize: 14,
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.75)',
   },
   scrollIndexValue: {
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.75)',
     textTransform: 'uppercase',
     fontSize: 14,
   },
@@ -65,6 +67,7 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   progressLabel: {
     verticalAlign: 'middle',
     marginBottom: 3,
+    fontWeight: 600,
   },
 }));
 
@@ -126,8 +129,9 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
             <Text className={classes.progressLabel}>{item.label}</Text>
             <Progress
               value={item.progress}
-              color={item.colorScheme || 'dark.0'}
-              styles={(theme) => ({ root: { backgroundColor: theme.colors.dark[3] } })}
+              size="md"
+              color={'rgba(228, 0, 0, 0.5)'}
+              bg={'rgba(255, 255, 255, 0.20)'}
             />
           </Stack>
         ) : (

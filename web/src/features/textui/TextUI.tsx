@@ -1,12 +1,11 @@
-import React from 'react';
-import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { Box, createStyles, Group } from '@mantine/core';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import ScaleFade from '../../transitions/ScaleFade';
 import remarkGfm from 'remark-gfm';
-import type { TextUiPosition, TextUiProps } from '../../typings';
 import MarkdownComponents from '../../config/MarkdownComponents';
-import LibIcon from '../../components/LibIcon';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
+import ScaleFade from '../../transitions/ScaleFade';
+import type { TextUiPosition, TextUiProps } from '../../typings';
 
 const useStyles = createStyles((theme, params: { position?: TextUiPosition }) => ({
   wrapper: {
@@ -14,35 +13,45 @@ const useStyles = createStyles((theme, params: { position?: TextUiPosition }) =>
     width: '100%',
     position: 'absolute',
     display: 'flex',
-    alignItems: 
-      params.position === 'top-center' ? 'baseline' :
-      params.position === 'bottom-center' ? 'flex-end' : 'center',
-    justifyContent: 
-      params.position === 'right-center' ? 'flex-end' :
-      params.position === 'left-center' ? 'flex-start' : 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   container: {
     fontSize: 16,
-    padding: 12,
-    margin: 8,
-    backgroundColor: theme.colors.dark[6],
-    color: theme.colors.dark[0],
-    fontFamily: 'Roboto',
-    borderRadius: theme.radius.sm,
-    boxShadow: theme.shadows.sm,
+    padding: 8,
+    margin: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    color: 'white',
+    fontFamily: 'Albert Sans',
+    borderRadius: 4,
+    fontWeight: 500,
+  },
+  buttonIndicator: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    padding: '2px 8px',
+    border: `1px solid rgba(255, 255, 255, 0.30)`,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    color: 'white',
+    boxShadow: '1px 1px 0px 0px rgba(255, 255, 255, 0.20)',
+    fontWeight: 800,
+    fontSize: 16,
   },
 }));
 
 const TextUI: React.FC = () => {
   const [data, setData] = React.useState<TextUiProps>({
     text: '',
-    position: 'right-center',
+    key: '',
+    position: 'left-center',
   });
   const [visible, setVisible] = React.useState(false);
   const { classes } = useStyles({ position: data.position });
 
   useNuiEvent<TextUiProps>('textUi', (data) => {
-    if (!data.position) data.position = 'right-center'; // Default right position
+    if (!data.position) data.position = 'left-center'; // Default right position
     setData(data);
     setVisible(true);
   });
@@ -55,7 +64,7 @@ const TextUI: React.FC = () => {
         <ScaleFade visible={visible}>
           <Box style={data.style} className={classes.container}>
             <Group spacing={12}>
-              {data.icon && (
+              {/* {data.icon && (
                 <LibIcon
                   icon={data.icon}
                   fixedWidth
@@ -66,7 +75,8 @@ const TextUI: React.FC = () => {
                     alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start',
                   }}
                 />
-              )}
+              )} */}
+              <div className={classes.buttonIndicator}>{data.key}</div>
               <ReactMarkdown components={MarkdownComponents} remarkPlugins={[remarkGfm]}>
                 {data.text}
               </ReactMarkdown>

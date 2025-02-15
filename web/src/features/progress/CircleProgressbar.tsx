@@ -1,9 +1,9 @@
+import { createStyles, keyframes, RingProgress, Stack, Text, useMantineTheme } from '@mantine/core';
 import React from 'react';
-import {createStyles, keyframes, RingProgress, Stack, Text, useMantineTheme} from '@mantine/core';
-import {useNuiEvent} from '../../hooks/useNuiEvent';
-import {fetchNui} from '../../utils/fetchNui';
+import { useNuiEvent } from '../../hooks/useNuiEvent';
 import ScaleFade from '../../transitions/ScaleFade';
-import type {CircleProgressbarProps} from '../../typings';
+import type { CircleProgressbarProps } from '../../typings';
+import { fetchNui } from '../../utils/fetchNui';
 
 // 33.5 is the r of the circle
 const progressCircle = keyframes({
@@ -23,7 +23,7 @@ const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; 
   },
   progress: {
     '> svg > circle:nth-child(1)': {
-      stroke: theme.colors.dark[5],
+      stroke: 'rgba(0, 0, 0, 0.50)',
     },
     // Scuffed way of grabbing the first section and animating it
     '> svg > circle:nth-child(2)': {
@@ -34,15 +34,17 @@ const useStyles = createStyles((theme, params: { position: 'middle' | 'bottom'; 
   },
   value: {
     textAlign: 'center',
-    fontFamily: 'roboto-mono',
+    fontFamily: 'Albert Sans-mono',
     textShadow: theme.shadows.sm,
-    color: theme.colors.gray[3],
+    color: 'white',
+    fontWeight: 600,
   },
   label: {
     textAlign: 'center',
     textShadow: theme.shadows.sm,
-    color: theme.colors.gray[3],
-    height: 25,
+    color: 'white',
+    height: 16,
+    fontWeight: 600,
   },
   wrapper: {
     marginTop: params.position === 'middle' ? 25 : undefined,
@@ -88,7 +90,7 @@ const CircleProgressbar: React.FC = () => {
             <RingProgress
               size={90}
               thickness={7}
-              sections={[{ value: 0, color: theme.primaryColor }]}
+              sections={[{ value: 0, color: 'rgba(228, 0, 0, 0.5)' }]}
               onAnimationEnd={() => setVisible(false)}
               className={classes.progress}
               label={<Text className={classes.value}>{value}%</Text>}

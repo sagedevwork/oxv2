@@ -4,19 +4,15 @@ import React from 'react';
 const useStyles = createStyles((theme) => ({
   container: {
     textAlign: 'center',
-    borderTopLeftRadius: theme.radius.md,
-    borderTopRightRadius: theme.radius.md,
-    backgroundColor: theme.colors.dark[6],
-    height: 60,
+    backgroundColor: 'transparent',
     width: 384,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: 16,
   },
   heading: {
     fontSize: 24,
-    textTransform: 'uppercase',
-    fontWeight: 500,
+    fontWeight: 700,
+    color: '#FFFFFF',
+    textAlign: 'left',
   },
 }));
 

@@ -1,8 +1,8 @@
-import { IDateInput } from '../../../../typings/dialog';
-import { Control, useController } from 'react-hook-form';
-import { FormValues } from '../../InputDialog';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
+import { Control, useController } from 'react-hook-form';
 import LibIcon from '../../../../components/LibIcon';
+import { IDateInput } from '../../../../typings/dialog';
+import { FormValues } from '../../InputDialog';
 
 interface Props {
   row: IDateInput;
@@ -37,6 +37,20 @@ const DateField: React.FC<Props> = (props) => {
           icon={props.row.icon && <LibIcon fixedWidth icon={props.row.icon} />}
           minDate={props.row.min ? new Date(props.row.min) : undefined}
           maxDate={props.row.max ? new Date(props.row.max) : undefined}
+          styles={{
+            input: {
+              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: 8,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              ':focus-within': {
+                borderColor: 'rgb(194, 5, 5)',
+              },
+            },
+            icon: {
+              color: 'rgba(255, 255, 255, 0.75)',
+            },
+          }}
         />
       )}
       {props.row.type === 'date-range' && (
@@ -64,6 +78,20 @@ const DateField: React.FC<Props> = (props) => {
           icon={props.row.icon && <LibIcon fixedWidth icon={props.row.icon} />}
           minDate={props.row.min ? new Date(props.row.min) : undefined}
           maxDate={props.row.max ? new Date(props.row.max) : undefined}
+          styles={{
+            input: {
+              color: 'rgba(255, 255, 255, 0.75)',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              borderRadius: 8,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              ':focus-within': {
+                borderColor: 'rgb(194, 5, 5)',
+              },
+            },
+            icon: {
+              color: 'rgba(255, 255, 255, 0.75)',
+            },
+          }}
         />
       )}
     </>
